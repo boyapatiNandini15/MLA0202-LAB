@@ -1,0 +1,32 @@
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+data=pd.DataFrame({
+'battery':[3000,4000,5000,3500,4500,6000,2500,5200,4100,4800],
+'ram':[2,3,4,4,6,8,2,8,6,6],
+'storage':[32,64,64,128,128,256,32,256,128,256],
+'camera':[8,12,16,16,48,64,8,64,48,50],
+'price_range':[0,1,1,2,2,3,0,3,2,3]
+})
+
+X=data[['battery','ram','storage','camera']]
+y=data['price_range']
+
+X_train,X_test,y_train,y_test=train_test_split(
+X,y,test_size=0.2,random_state=42)
+
+model=RandomForestClassifier(n_estimators=100,random_state=42)
+model.fit(X_train,y_train)
+
+pred=model.predict(X_test)
+
+print("Name: B.Nandini")
+print("Reg No: 192525137")
+print("Accuracy:",accuracy_score(y_test,pred))
+
+mobile=[[5000,8,256,64]]
+print("Predicted Price Range:",model.predict(mobile)[0])
